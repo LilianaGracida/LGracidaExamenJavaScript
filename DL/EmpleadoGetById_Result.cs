@@ -13,6 +13,7 @@ namespace DL
     
     public partial class EmpleadoGetById_Result
     {
+        public int IdEmpleado { get; set; }
         public string NumeroNomina { get; set; }
         public string Nombre { get; set; }
         public string ApellidoPaterno { get; set; }

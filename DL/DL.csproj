@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C2AB3817-EA9D-4ED9-AA0E-590004010AB4}</ProjectGuid>
+    <ProjectGuid>{37270081-13D9-4C61-8399-249137E57635}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DL</RootNamespace>
@@ -12,6 +13,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -51,39 +54,73 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="ExamenJS.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ExamenJS.Context.tt</DependentUpon>
+    <Compile Include="Empleado.cs">
+      <DependentUpon>ExamenJs.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExamenJS.Designer.cs">
+    <Compile Include="EmpleadoGetAll_Result.cs">
+      <DependentUpon>ExamenJs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EmpleadoGetById_Result.cs">
+      <DependentUpon>ExamenJs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Estado.cs">
+      <DependentUpon>ExamenJs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EstadoGetAll_Result.cs">
+      <DependentUpon>ExamenJs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExamenJs.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ExamenJS.edmx</DependentUpon>
+      <DependentUpon>ExamenJs.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExamenJs.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExamenJs.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExamenJs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExamenJs.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ExamenJS.edmx">
+    <EntityDeploy Include="ExamenJs.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ExamenJS.Designer.cs</LastGenOutput>
+      <LastGenOutput>ExamenJs.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="ExamenJS.edmx.diagram">
-      <DependentUpon>ExamenJS.edmx</DependentUpon>
+    <None Include="ExamenJs.edmx.diagram">
+      <DependentUpon>ExamenJs.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExamenJS.Context.tt">
+    <Content Include="ExamenJs.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ExamenJS.Context.cs</LastGenOutput>
+      <LastGenOutput>ExamenJs.Context.cs</LastGenOutput>
+      <DependentUpon>ExamenJs.edmx</DependentUpon>
+    </Content>
+    <Content Include="ExamenJs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ExamenJs.edmx</DependentUpon>
+      <LastGenOutput>ExamenJs.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>

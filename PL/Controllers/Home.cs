@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace PL.Controllers
 {
-    public class HomeController : Controller
+    public class Home : Controller
     {
         public ActionResult Index()
         {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ML
 {
+
     public class Empleado
     {
         public int IdEmpleado { get; set; }

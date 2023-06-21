@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ExamenJavaScriptModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ExamenJavaScriptModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Empleado">
           <Key>
             <PropertyRef Name="IdEmpleado" />
@@ -57,6 +57,7 @@
           <Parameter Name="ApellidoMaterno" Type="varchar" Mode="In" />
           <Parameter Name="IdEstado" Type="int" Mode="In" />
         </Function>
+        <Function Name="EstadoGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="ExamenJavaScriptModelStoreContainer">
           <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
@@ -65,8 +66,7 @@
             <End Role="Empleado" EntitySet="Empleado" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ExamenJavaScriptModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -116,13 +116,6 @@
             <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
             <Parameter Name="IdEstado" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="EmpleadoDelete">
-            <Parameter Name="IdEmpleado" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="EmpleadoGetAll" ReturnType="Collection(ExamenJavaScriptModel.EmpleadoGetAll_Result)" />
-          <FunctionImport Name="EmpleadoGetById" ReturnType="Collection(ExamenJavaScriptModel.EmpleadoGetById_Result)">
-            <Parameter Name="IdEmpleado" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="EmpleadoUpdate">
             <Parameter Name="IdEmpleado" Mode="In" Type="Int32" />
             <Parameter Name="NumeroNomina" Mode="In" Type="String" />
@@ -131,8 +124,17 @@
             <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
             <Parameter Name="IdEstado" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="EmpleadoGetAll" ReturnType="Collection(ExamenJavaScriptModel.EmpleadoGetAll_Result)" />
+          <FunctionImport Name="EmpleadoGetById" ReturnType="Collection(ExamenJavaScriptModel.EmpleadoGetById_Result)">
+          <Parameter Name="IdEmpleado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EstadoGetAll" ReturnType="Collection(ExamenJavaScriptModel.EstadoGetAll_Result)" />
+          <FunctionImport Name="EmpleadoDelete">
+            <Parameter Name="IdEmpleado" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="EmpleadoGetAll_Result">
+          <Property Type="Int32" Name="IdEmpleado" Nullable="false" />
           <Property Type="String" Name="NumeroNomina" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="100" />
@@ -141,10 +143,15 @@
           <Property Type="String" Name="Estado" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="EmpleadoGetById_Result">
+          <Property Type="Int32" Name="IdEmpleado" Nullable="false" />
           <Property Type="String" Name="NumeroNomina" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="ApellidoMaterno" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="IdEstado" Nullable="false" />
+          <Property Type="String" Name="Estado" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="EstadoGetAll_Result">
           <Property Type="Int32" Name="IdEstado" Nullable="false" />
           <Property Type="String" Name="Estado" Nullable="false" MaxLength="100" />
         </ComplexType>
@@ -175,10 +182,11 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="EmpleadoAdd" FunctionName="ExamenJavaScriptModel.Store.EmpleadoAdd" />
-          <FunctionImportMapping FunctionImportName="EmpleadoDelete" FunctionName="ExamenJavaScriptModel.Store.EmpleadoDelete" />
+          <FunctionImportMapping FunctionImportName="EmpleadoUpdate" FunctionName="ExamenJavaScriptModel.Store.EmpleadoUpdate" />
           <FunctionImportMapping FunctionImportName="EmpleadoGetAll" FunctionName="ExamenJavaScriptModel.Store.EmpleadoGetAll">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExamenJavaScriptModel.EmpleadoGetAll_Result">
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
                 <ScalarProperty Name="NumeroNomina" ColumnName="NumeroNomina" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
@@ -191,6 +199,7 @@
           <FunctionImportMapping FunctionImportName="EmpleadoGetById" FunctionName="ExamenJavaScriptModel.Store.EmpleadoGetById">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExamenJavaScriptModel.EmpleadoGetById_Result">
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
                 <ScalarProperty Name="NumeroNomina" ColumnName="NumeroNomina" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
@@ -200,7 +209,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="EmpleadoUpdate" FunctionName="ExamenJavaScriptModel.Store.EmpleadoUpdate" />
+          <FunctionImportMapping FunctionImportName="EstadoGetAll" FunctionName="ExamenJavaScriptModel.Store.EstadoGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExamenJavaScriptModel.EstadoGetAll_Result">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="EmpleadoDelete" FunctionName="ExamenJavaScriptModel.Store.EmpleadoDelete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
